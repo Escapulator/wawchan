@@ -21,15 +21,7 @@ class Latests extends StatelessWidget {
                     String excerpt = wpPosts['post_content'];
                     String chapter = wpPosts['title'];
                     String category = wpPosts['category'];
-                    Widget imageurl = wpPosts['images'] == '0'
-                        ? Image.network(
-                            wpPosts['images'],
-                            height: MediaQuery.of(context).size.height * .2,
-                          )
-                        : Image.asset(
-                            'assets/imagez.png',
-                            height: MediaQuery.of(context).size.height * .2,
-                          );
+                    String imageurl = wpPosts['category_image'];
                     return Row(
                       children: [
                         InkWell(
@@ -46,7 +38,18 @@ class Latests extends StatelessWidget {
                             padding: EdgeInsets.only(top: 5, left: 8, right: 8),
                             child: Column(
                               children: [
-                                imageurl,
+                                FadeInImage(
+                                  image: NetworkImage(imageurl),
+                                  placeholder: AssetImage('assets/imagez.png'),
+                                  imageErrorBuilder:
+                                      (context, error, stackTrace) =>
+                                          Image.asset('assets/imagez.png'),
+                                  placeholderErrorBuilder:
+                                      (context, error, stackTrace) =>
+                                          Image.asset('assets/imagez.png'),
+                                  height:
+                                      MediaQuery.of(context).size.height * .2,
+                                ),
                                 Container(
                                   width: MediaQuery.of(context).size.width * .2,
                                   child: Text(

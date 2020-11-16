@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:wawchan/Model/Journal.dart';
@@ -17,7 +19,7 @@ class AuthDialog extends StatefulWidget {
 
 class _AuthDialogState extends State<AuthDialog> {
   FlutterTts flutterTts = FlutterTts();
-  bool isPlaying = true;
+  bool isPlaying = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +54,10 @@ class _AuthDialogState extends State<AuthDialog> {
 
     return Container(
         padding: EdgeInsets.all(20),
-        height: MediaQuery.of(context).size.height * .28,
-        width: MediaQuery.of(context).size.width * .6,
+        height: Platform.isAndroid
+            ? MediaQuery.of(context).size.height * .28
+            : MediaQuery.of(context).size.height * .22,
+        width: MediaQuery.of(context).size.width * .4,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), color: Color(0xff01C606)),
@@ -61,14 +65,14 @@ class _AuthDialogState extends State<AuthDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DrawNav(),
-            IconButton(
-              icon: Icon(Icons.speaker_group),
+            FlatButton(
+              child: isPlaying ? Text('Pause') : Text('Read'),
               onPressed: () {
                 isPlaying ? notReading() : speak();
               },
             ),
-            IconButton(
-                icon: Icon(Icons.star),
+            FlatButton(
+                child: Text('Add to Favourites'),
                 onPressed: () async {
                   var journalObject = Journal();
 

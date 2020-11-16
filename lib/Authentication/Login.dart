@@ -188,7 +188,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                SizedBox(
+                /*SizedBox(
                   height: MediaQuery.of(context).size.height * .05,
                 ),
                 Text(
@@ -198,7 +198,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .02,
                 ),
-                Row(
+Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
@@ -243,7 +243,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * .1,
                 ),
-                Row(
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -263,7 +263,7 @@ class _LoginState extends State<Login> {
                       },
                     )
                   ],
-                ),
+                ), */
               ],
             ),
           ),

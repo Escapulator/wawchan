@@ -45,7 +45,7 @@ class _CategoryListState extends State<CategoryList> {
                         Map wpPosts = snapshot.data[index];
                         String excerpt = wpPosts['post_content'];
                         String chapter = wpPosts['title'];
-                        String category = wpPosts['categoryList'];
+                        String category = wpPosts['category'];
                         // var imageurl = wpPosts['images'] == 'null'
                         //   ? Image.asset('assets/imagez.png')
                         // : Image.network(wpPosts['images']);

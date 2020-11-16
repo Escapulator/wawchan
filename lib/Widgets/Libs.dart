@@ -85,7 +85,7 @@ class _LibsState extends State<Libs> {
               );
             })
         : Center(
-            child: Icon(Icons.note, size: 90),
+            child: Text('No Favourites Yet'),
           );
   }
 }

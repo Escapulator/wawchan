@@ -2,6 +2,7 @@ import 'dart:async';
 //import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wawchan/Authentication/Login.dart';
 import 'package:wawchan/Library/Library.dart';
 import 'package:wawchan/Onboarding/Onboard.dart';
 import 'package:wawchan/Screens/Home.dart';
@@ -27,7 +28,7 @@ class _SplashState extends State<Splash> {
       if (sharedPreferences.getString("token") == null) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (BuildContext context) => Onboarding(),
+              builder: (BuildContext context) => Login(),
             ),
             (Route<dynamic> route) => false);
       } else {
@@ -37,6 +38,7 @@ class _SplashState extends State<Splash> {
                 MaterialPageRoute(builder: (BuildContext context) => Library()),
                 (Route<dynamic> route) => false)
             : */
+        print(sharedPreferences.getString("token"));
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => Home()),
             (Route<dynamic> route) => false);

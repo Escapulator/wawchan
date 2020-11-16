@@ -26,7 +26,12 @@ class _ReadState extends State<Read> {
   Widget build(BuildContext context) {
     GoogleTranslator translator = GoogleTranslator();
     String body = widget.post;
-    String read = parse((body.toString())).documentElement.text;
+    String r = body.replaceAll(
+        'Previous&nbsp;|&nbsp;Table of Contents&nbsp;|&nbsp;Next', '\n');
+    //'Previous&nbsp;\u2013&nbsp;Table of Contents&nbsp;\u2013&nbsp;Next'
+    //'Previous&nbsp;–&nbsp;Table of Contents&nbsp;–&nbsp;Next'
+    String re = r.replaceAll('\n\n\n\n', '\n\n');
+    String read = parse((re.toString())).documentElement.text;
 
     stop() async {
       print('Stop');
@@ -41,6 +46,8 @@ class _ReadState extends State<Read> {
         });
       });
     }
+
+    print(body);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -114,7 +121,9 @@ class _ReadState extends State<Read> {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           child: Text(
             read,
-            style: TextStyle(fontSize: size, height: 1),
+            style: TextStyle(
+              fontSize: size,
+            ),
             textAlign: TextAlign.justify,
           ),
         ),
