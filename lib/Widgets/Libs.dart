@@ -60,7 +60,7 @@ class _LibsState extends State<Libs> {
                       child: Column(
                         children: [
                           Image.asset(
-                            'assets/geh.png',
+                            'assets/cover.png',
                             height: MediaQuery.of(context).size.height * .2,
                             width: MediaQuery.of(context).size.width * .3,
                           ),
@@ -85,7 +85,7 @@ class _LibsState extends State<Libs> {
               );
             })
         : Center(
-            child: Text('No Favourites Yet'),
+            child: Text('No Bookmarks Yet'),
           );
   }
 }

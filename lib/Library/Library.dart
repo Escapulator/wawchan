@@ -81,7 +81,7 @@ class _LibraryState extends State<Library> {
             ),
           )
         : Center(
-            child: Icon(Icons.note, size: 90),
+            child: Text('No Bookmarks Yet'),
           );
   }
 }

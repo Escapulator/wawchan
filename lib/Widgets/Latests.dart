@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wawchan/Screens/Cartoons.dart';
 import 'package:wawchan/Screens/Read.dart';
 import 'package:wawchan/Services/wp_api.dart';
 
@@ -22,17 +23,31 @@ class Latests extends StatelessWidget {
                     String chapter = wpPosts['title'];
                     String category = wpPosts['category'];
                     String imageurl = wpPosts['category_image'];
+                    List image = wpPosts['images'];
+                    int id = wpPosts['category_id'];
                     return Row(
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Read(
-                                post: excerpt,
-                                chapter: chapter,
-                                category: category,
-                              ),
-                            ));
+                            category == 'Isekai no Monogatari'
+                                ? Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Cartoons(
+                                          images: image,
+                                          post: excerpt,
+                                          chapter: chapter,
+                                          category: category,
+                                          imageUrl: imageurl,
+                                          id: id,
+                                        )))
+                                : Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Read(
+                                      post: excerpt,
+                                      chapter: chapter,
+                                      category: category,
+                                      imageUrl: imageurl,
+                                      id: id,
+                                    ),
+                                  ));
                           },
                           child: Container(
                             padding: EdgeInsets.only(top: 5, left: 8, right: 8),
@@ -40,13 +55,13 @@ class Latests extends StatelessWidget {
                               children: [
                                 FadeInImage(
                                   image: NetworkImage(imageurl),
-                                  placeholder: AssetImage('assets/imagez.png'),
+                                  placeholder: AssetImage('assets/cover.png'),
                                   imageErrorBuilder:
                                       (context, error, stackTrace) =>
-                                          Image.asset('assets/imagez.png'),
+                                          Image.asset('assets/cover.png'),
                                   placeholderErrorBuilder:
                                       (context, error, stackTrace) =>
-                                          Image.asset('assets/imagez.png'),
+                                          Image.asset('assets/cover.png'),
                                   height:
                                       MediaQuery.of(context).size.height * .2,
                                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:html/parser.dart';
 import 'package:translator/translator.dart';
+import 'package:wawchan/Services/wp_api.dart';
 import 'package:wawchan/Widgets/appDrawer.dart';
 import 'package:wawchan/Widgets/ReadDialog.dart';
 
@@ -11,7 +12,14 @@ class Read extends StatefulWidget {
   final String category;
   final int id;
   final String name;
-  Read({this.post, this.chapter, this.category, this.id, this.name});
+  final String imageUrl;
+  Read(
+      {this.post,
+      this.chapter,
+      this.category,
+      this.id,
+      this.name,
+      this.imageUrl});
   @override
   _ReadState createState() => _ReadState();
 }
@@ -26,10 +34,7 @@ class _ReadState extends State<Read> {
   Widget build(BuildContext context) {
     GoogleTranslator translator = GoogleTranslator();
     String body = widget.post;
-    String r = body.replaceAll(
-        'Previous&nbsp;|&nbsp;Table of Contents&nbsp;|&nbsp;Next', '\n');
-    //'Previous&nbsp;\u2013&nbsp;Table of Contents&nbsp;\u2013&nbsp;Next'
-    //'Previous&nbsp;–&nbsp;Table of Contents&nbsp;–&nbsp;Next'
+    String r = body.replaceAll('Previous | Table of Contents | Next', '\n');
     String re = r.replaceAll('\n\n\n\n', '\n\n');
     String read = parse((re.toString())).documentElement.text;
 
@@ -46,8 +51,6 @@ class _ReadState extends State<Read> {
         });
       });
     }
-
-    print(body);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -86,7 +89,11 @@ class _ReadState extends State<Read> {
           ) */
         ],
       ),
-      endDrawer: AppDrawer(name: widget.name, id: widget.id),
+      endDrawer: AppDrawer(
+        name: widget.name,
+        id: widget.id,
+        image: widget.imageUrl,
+      ),
       persistentFooterButtons: [
         Container(
           height: MediaQuery.of(context).size.height * .05,

@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Container(
-                height: MediaQuery.of(context).size.height * .61,
+                height: MediaQuery.of(context).size.height * .7,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Favourites',
+                              'Bookmarks',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w600),
                             ),

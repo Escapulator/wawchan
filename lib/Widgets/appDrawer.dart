@@ -4,8 +4,9 @@ import 'package:wawchan/Services/wp_api.dart';
 
 class AppDrawer extends StatefulWidget {
   final int id;
+  final String image;
   final String name;
-  AppDrawer({this.id, this.name});
+  AppDrawer({this.id, this.name, this.image});
   @override
   _AppDrawerState createState() => _AppDrawerState();
 }
@@ -13,23 +14,23 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
-    int offset = 10;
+    int offset = 1;
     return Container(
       width: MediaQuery.of(context).size.width * .5,
       height: MediaQuery.of(context).size.height * .9,
       child: Drawer(
-          child:
-              /* DrawerHeader(
-              child: Image.asset(
-                'assets/imagez.png',
-                height: MediaQuery.of(context).size.height * .2,
-              ),
-            ), */
-              Column(
+          child: Column(
         children: [
           DrawerHeader(
-            child: Image.asset('assets/imagez.png',
-                height: MediaQuery.of(context).size.height * .2),
+            child: FadeInImage(
+              image: NetworkImage(widget.image),
+              placeholder: AssetImage('assets/cover.png'),
+              imageErrorBuilder: (context, error, stackTrace) =>
+                  Image.asset('assets/cover.png'),
+              placeholderErrorBuilder: (context, error, stackTrace) =>
+                  Image.asset('assets/cover.png'),
+              height: MediaQuery.of(context).size.height * .2,
+            ),
           ),
           Container(
             height: MediaQuery.of(context).size.height * .6,
@@ -62,7 +63,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                 chapter,
                                 style: TextStyle(fontSize: 15),
                                 textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
+                                overflow: TextOverflow.visible,
                               ),
                             ),
                             SizedBox(

@@ -65,14 +65,19 @@ class _AuthDialogState extends State<AuthDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DrawNav(),
-            FlatButton(
-              child: isPlaying ? Text('Pause') : Text('Read'),
-              onPressed: () {
-                isPlaying ? notReading() : speak();
-              },
-            ),
-            FlatButton(
-                child: Text('Add to Favourites'),
+            Platform.isIOS
+                ? FlatButton(
+                    child: isPlaying ? Text('Pause') : Text('Read'),
+                    onPressed: () {
+                      isPlaying ? notReading() : speak();
+                    },
+                  )
+                : Container(
+                    height: 0,
+                    width: 0,
+                  ),
+            RaisedButton(
+                child: Text('Add to Bookmarks'),
                 onPressed: () async {
                   var journalObject = Journal();
 

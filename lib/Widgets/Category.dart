@@ -34,13 +34,13 @@ class Category extends StatelessWidget {
                             children: [
                               FadeInImage(
                                 image: NetworkImage(imagess),
-                                placeholder: AssetImage('assets/imagez.png'),
+                                placeholder: AssetImage('assets/cover.png'),
                                 imageErrorBuilder:
                                     (context, error, stackTrace) =>
-                                        Image.asset('assets/imagez.png'),
+                                        Image.asset('assets/cover.png'),
                                 placeholderErrorBuilder:
                                     (context, error, stackTrace) =>
-                                        Image.asset('assets/imagez.png'),
+                                        Image.asset('assets/cover.png'),
                                 height: MediaQuery.of(context).size.height * .2,
                               ),
                               Container(

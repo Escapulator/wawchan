@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wawchan/Screens/Cartoons.dart';
 import 'package:wawchan/Screens/Read.dart';
 import 'package:wawchan/Services/wp_api.dart';
 
@@ -16,6 +17,7 @@ class _CategoryListState extends State<CategoryList> {
   Widget build(BuildContext context) {
     int offset = 1;
     return Scaffold(
+      backgroundColor: Colors.green[100],
       appBar: AppBar(
         title: Text(widget.name, style: TextStyle(color: Colors.black)),
         elevation: 0,
@@ -46,21 +48,33 @@ class _CategoryListState extends State<CategoryList> {
                         String excerpt = wpPosts['post_content'];
                         String chapter = wpPosts['title'];
                         String category = wpPosts['category'];
-                        // var imageurl = wpPosts['images'] == 'null'
-                        //   ? Image.asset('assets/imagez.png')
-                        // : Image.network(wpPosts['images']);
+                        List image = wpPosts['images'];
+                        int id = wpPosts['category_id'];
+                        String imageurl = wpPosts['category_image'];
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Read(
-                                      post: excerpt,
-                                      chapter: chapter,
-                                      category: category,
-                                    ),
-                                  ));
+                                  category == 'Isekai no Monogatari'
+                                      ? Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => Cartoons(
+                                                    images: image,
+                                                    post: excerpt,
+                                                    chapter: chapter,
+                                                    category: category,
+                                                    imageUrl: imageurl,
+                                                    id: id,
+                                                  )))
+                                      : Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                          builder: (context) => Read(
+                                            post: excerpt,
+                                            chapter: chapter,
+                                            category: category,
+                                          ),
+                                        ));
                                 },
                                 child: Padding(
                                   padding:

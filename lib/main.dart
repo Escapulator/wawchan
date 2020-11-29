@@ -46,7 +46,6 @@ class _DrawNavState extends State<DrawNav> {
   Widget build(BuildContext context) {
     bool isOn = false;
     return FlatButton(
-      //value: isOn,
       child: Text(
         'Dark Theme',
         style: TextStyle(color: Colors.black),

@@ -26,7 +26,7 @@ Future<List> fetchPosts(int perpage, int id, int offset) async {
         'Authorization': 'Bearer $token'
       });
   if (response.statusCode == 200) {
-    print(response.body);
+    //print(response.body);
     return json.decode(response.body);
   } else {
     print(response.body);
