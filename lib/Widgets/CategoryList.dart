@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wawchan/Screens/Cartoons.dart';
 import 'package:wawchan/Screens/Read.dart';
+import 'package:wawchan/Screens/test.dart';
 import 'package:wawchan/Services/wp_api.dart';
 
 class CategoryList extends StatefulWidget {
@@ -69,10 +70,11 @@ class _CategoryListState extends State<CategoryList> {
                                                   )))
                                       : Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                          builder: (context) => Read(
+                                          builder: (context) => Tes(
                                             post: excerpt,
                                             chapter: chapter,
                                             category: category,
+                                            id: id,
                                           ),
                                         ));
                                 },

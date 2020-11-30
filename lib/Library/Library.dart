@@ -76,6 +76,9 @@ class _LibraryState extends State<Library> {
                               journal: _journalist[index],
                             )));
                   },
+                  onLongPress: () {
+                    //Us long press to delete at index
+                  },
                 );
               },
             ),
