@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wawchan/Screens/Anoda.dart';
 import 'package:wawchan/Screens/Cartoons.dart';
 import 'package:wawchan/Screens/Read.dart';
 import 'package:wawchan/Screens/test.dart';
@@ -70,11 +71,12 @@ class _CategoryListState extends State<CategoryList> {
                                                   )))
                                       : Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                          builder: (context) => Tes(
+                                          builder: (context) => Anoda(
                                             post: excerpt,
                                             chapter: chapter,
                                             category: category,
                                             id: id,
+                                            imageUrl: imageurl,
                                           ),
                                         ));
                                 },
