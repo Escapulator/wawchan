@@ -122,17 +122,32 @@ class _ReadState extends State<Read> {
           ),
         )
       ],
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-          child: Text(
-            read,
-            style: TextStyle(
-              fontSize: size,
-            ),
-            textAlign: TextAlign.justify,
+      body: Column(
+        children: [
+          Text(
+            widget.chapter,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            textAlign: TextAlign.center,
           ),
-        ),
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * .74,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12, left: 15, right: 15),
+                child: Text(
+                  read,
+                  style: TextStyle(
+                    fontSize: size,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

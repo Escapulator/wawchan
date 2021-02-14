@@ -38,6 +38,36 @@ class _LibsState extends State<Libs> {
     });
   }
 
+  delete(BuildContext context, id) {
+    return showDialog(
+        context: context,
+        builder: (param) {
+          return AlertDialog(
+            actions: [
+              RaisedButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                color: Colors.green[200],
+              ),
+              RaisedButton(
+                child: Text('Delete'),
+                onPressed: () async {
+                  var result = await journalService.deleteJournal(id);
+                  if (result > 0) {
+                    Navigator.of(context).pop();
+                    getjournal();
+                    //get a snackbar to show
+                  }
+                },
+              )
+            ],
+            title: Text('Are you sure you want to delete this?'),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     //final post = Provider.of<List<Journal>>(context);
@@ -54,6 +84,9 @@ class _LibsState extends State<Libs> {
                           builder: (context) => ViewNote(
                                 journal: _journalist[index],
                               )));
+                    },
+                    onLongPress: () {
+                      delete(context, _journalist[index].id);
                     },
                     child: Container(
                       padding: EdgeInsets.only(top: 5, left: 8, right: 8),
@@ -85,7 +118,7 @@ class _LibsState extends State<Libs> {
               );
             })
         : Center(
-            child: Text('No Bookmarks Yet'),
+            child: Text('No Downloads Yet'),
           );
   }
 }

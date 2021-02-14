@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wawchan/Screens/Read.dart';
+import 'package:wawchan/Screens/Anoda.dart';
+import 'package:wawchan/Screens/Cartoons.dart';
 import 'package:wawchan/Services/wp_api.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -45,19 +46,37 @@ class _AppDrawerState extends State<AppDrawer> {
                         String excerpt = wpPosts['post_content'];
                         String chapter = wpPosts['title'];
                         String category = wpPosts['category'];
+                        List image = wpPosts['images'];
+                        int id = wpPosts['category_id'];
+                        String imageurl = wpPosts['category_image'];
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ListTile(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Read(
+                                category == 'Isekai no Monogatari'
+                                    ? Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => Cartoons(
+                                                  images: image,
+                                                  post: excerpt,
+                                                  chapter: chapter,
+                                                  category: category,
+                                                  imageUrl: imageurl,
+                                                  id: id,
+                                                )))
+                                    : Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                        builder: (context) => Anoda(
                                           post: excerpt,
-                                          id: widget.id,
                                           chapter: chapter,
                                           category: category,
-                                          name: category,
-                                        )));
+                                          id: id,
+                                          imageUrl: imageurl,
+                                          sample: snapshot.data,
+                                          index: index,
+                                        ),
+                                      ));
                               },
                               title: Text(
                                 chapter,

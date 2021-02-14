@@ -15,10 +15,9 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formkey = GlobalKey();
   final key = new GlobalKey<ScaffoldState>();
   String password = '';
-  String username = '';
   bool passwordVisible = false;
 
-  _login(String username, String password) async {
+  _login(String password) async {
     if (_formkey.currentState.validate()) {
       showDialog(
         barrierDismissible: false,
@@ -27,7 +26,10 @@ class _LoginState extends State<Login> {
           status: 'Logging You in',
         ),
       );
-      Map<String, String> dets = {'username': username, 'password': password};
+      Map<String, String> dets = {
+        'username': 'appauthorization212',
+        'password': password
+      };
       //var jsonData = null;
       SharedPreferences _shared = await SharedPreferences.getInstance();
       final response = await http.post(
@@ -47,6 +49,7 @@ class _LoginState extends State<Login> {
             ),
             (route) => false);
       } else {
+        Navigator.of(context).pop();
         key.currentState.showSnackBar(new SnackBar(
           content: new Text("Invalid Login Details"),
           duration: Duration(seconds: 3),
@@ -107,24 +110,6 @@ class _LoginState extends State<Login> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
                             child: TextFormField(
-                              decoration: textInputDecoration.copyWith(
-                                  labelText: 'Username'),
-                              onChanged: (val) {
-                                username = val;
-                              },
-                              validator: (val) {
-                                return val.isEmpty ? 'Enter username' : null;
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * .02,
-                          ),
-                          Card(
-                            elevation: 8,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            child: TextFormField(
                               obscureText: passwordVisible,
                               decoration: textInputDecoration.copyWith(
                                 labelText: 'Password',
@@ -172,7 +157,7 @@ class _LoginState extends State<Login> {
                 ),
                 InkWell(
                   onTap: () {
-                    _login(username, password);
+                    _login(password);
                   },
                   child: Container(
                     alignment: Alignment.center,

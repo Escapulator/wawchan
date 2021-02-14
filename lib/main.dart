@@ -1,10 +1,7 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wawchan/Authentication/CheckoutnPay.dart';
 import 'package:wawchan/Authentication/Login.dart';
-import 'package:wawchan/Authentication/Payment.dart';
-import 'package:wawchan/Authentication/PaymentCompleted.dart';
 import 'package:wawchan/Authentication/Register.dart';
 import 'package:wawchan/Screens/Home.dart';
 import 'package:wawchan/Splash.dart';
@@ -26,9 +23,6 @@ class MyApp extends StatelessWidget {
             routes: {
               'Login': (BuildContext context) => new Login(),
               'Register': (BuildContext context) => new Register(),
-              'Payment': (BuildContext context) => new Payment(),
-              'Checkout': (BuildContext context) => new Checkout(),
-              'Completed': (BuildContext context) => new Completed(),
               'Home': (BuildContext context) => new Home(),
             },
           );

@@ -15,4 +15,8 @@ class JournalService {
   readJournal() async {
     return await _repo.readData('journal_entries');
   }
+
+  deleteJournal(id) async {
+    return await _repo.delete('journal_entries', id);
+  }
 }

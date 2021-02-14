@@ -3,7 +3,12 @@ import 'package:wawchan/Screens/Cartoons.dart';
 import 'package:wawchan/Screens/Read.dart';
 import 'package:wawchan/Services/wp_api.dart';
 
-class Latests extends StatelessWidget {
+class Latests extends StatefulWidget {
+  @override
+  _LatestsState createState() => _LatestsState();
+}
+
+class _LatestsState extends State<Latests> {
   @override
   Widget build(BuildContext context) {
     int offset;

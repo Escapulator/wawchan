@@ -1,7 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 import 'package:wawchan/Model/Journal.dart';
-import 'package:wawchan/Widgets/ReadDialog.dart';
+import 'package:wawchan/Widgets/LibsDialog.dart';
 
 class ViewNote extends StatefulWidget {
   final Journal journal;
@@ -12,15 +13,18 @@ class ViewNote extends StatefulWidget {
 }
 
 class _ViewNoteState extends State<ViewNote> {
+  double size = 16;
   String title;
   String body;
-  String date;
+  String category;
+  int id;
 
   @override
   void initState() {
     title = widget.journal.chapter;
     body = widget.journal.post;
-    date = widget.journal.chapter;
+    category = widget.journal.category;
+    id = widget.journal.id;
     super.initState();
   }
 
@@ -42,34 +46,83 @@ class _ViewNoteState extends State<ViewNote> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          date,
+          category,
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
         iconTheme: new IconThemeData(color: Color(0xff01C606)),
         elevation: 0,
         actions: [
-          IconButton(
-            icon: Icon(Icons.list),
-            onPressed: () {
-              translate(body);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () => showDialog(
-                context: context, builder: (context) => AuthDialog()),
-          ),
+          Platform.isIOS
+              ? IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => LibsDialog(
+                            read: body,
+                            chapter: title,
+                            id: id,
+                            category: category,
+                            name: '2',
+                          )),
+                )
+              : Container(),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            body,
-            style: TextStyle(fontSize: 16, height: 1),
-            textAlign: TextAlign.justify,
+      persistentFooterButtons: [
+        Container(
+          height: MediaQuery.of(context).size.height * .05,
+          width: MediaQuery.of(context).size.width * 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'T',
+                style: TextStyle(fontSize: 16),
+              ),
+              Slider(
+                min: 16,
+                max: 25,
+                value: size,
+                onChanged: (double newsize) {
+                  setState(() {
+                    size = newsize;
+                  });
+                },
+              ),
+              Text(
+                'T',
+                style: TextStyle(fontSize: 25),
+              ),
+            ],
           ),
+        )
+      ],
+      body: Container(
+        height: double.infinity,
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * .86,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    body,
+                    style: TextStyle(fontSize: 16, height: 1),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wawchan/Authentication/Login.dart';
+import 'package:wawchan/Library/FavList.dart';
 import 'package:wawchan/Library/Library.dart';
+import 'package:wawchan/Widgets/Favs.dart';
 import 'package:wawchan/Widgets/LatestRelease.dart';
 import 'package:wawchan/Widgets/Category.dart';
 import 'package:wawchan/Widgets/Libs.dart';
@@ -116,7 +118,7 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Bookmarks',
+                              'Downloads',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w600),
                             ),
@@ -137,6 +139,33 @@ class _HomeState extends State<Home> {
                           width: MediaQuery.of(context).size.width * 1,
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Libs()),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12, left: 14),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Favorites',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w600),
+                            ),
+                            FlatButton(
+                              child: Text('View all'),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => FavList()));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                          height: Platform.isIOS
+                              ? MediaQuery.of(context).size.height * .28
+                              : MediaQuery.of(context).size.height * .3,
+                          width: MediaQuery.of(context).size.width * 1,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Favs()),
                     ],
                   ),
                 ))

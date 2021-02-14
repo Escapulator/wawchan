@@ -25,4 +25,9 @@ class Repo {
     var connection = await database;
     return await connection.query(table);
   }
+
+  delete(table, itemId) async {
+    var connection = await database;
+    return await connection.rawDelete("DELETE FROM $table WHERE id = $itemId");
+  }
 }

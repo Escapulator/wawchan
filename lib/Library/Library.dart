@@ -38,6 +38,36 @@ class _LibraryState extends State<Library> {
     });
   }
 
+  delete(BuildContext context, id) {
+    return showDialog(
+        context: context,
+        builder: (param) {
+          return AlertDialog(
+            actions: [
+              RaisedButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                color: Colors.green[200],
+              ),
+              RaisedButton(
+                child: Text('Delete'),
+                onPressed: () async {
+                  var result = await journalService.deleteJournal(id);
+                  if (result > 0) {
+                    Navigator.of(context).pop();
+                    getjournal();
+                    //get a snackbar to show
+                  }
+                },
+              )
+            ],
+            title: Text('Are you sure you want to delete this?'),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     //final post = Provider.of<List<Journal>>(context);
@@ -77,14 +107,26 @@ class _LibraryState extends State<Library> {
                             )));
                   },
                   onLongPress: () {
-                    //Us long press to delete at index
+                    delete(context, _journalist[index].id);
                   },
                 );
               },
             ),
           )
-        : Center(
-            child: Text('No Bookmarks Yet'),
+        : Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              title: Text(
+                'Library',
+                style: TextStyle(color: Colors.black),
+              ),
+              centerTitle: true,
+              elevation: 0,
+              iconTheme: new IconThemeData(color: Color(0xff01C606)),
+            ),
+            body: Center(
+              child: Text('No Downloads Yet'),
+            ),
           );
   }
 }

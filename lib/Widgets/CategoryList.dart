@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wawchan/Model/FavModel.dart';
 import 'package:wawchan/Screens/Anoda.dart';
 import 'package:wawchan/Screens/Cartoons.dart';
-import 'package:wawchan/Screens/Read.dart';
-import 'package:wawchan/Screens/test.dart';
+import 'package:wawchan/Services/Favourites.dart';
 import 'package:wawchan/Services/wp_api.dart';
 
 class CategoryList extends StatefulWidget {
@@ -15,11 +16,28 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
+  SharedPreferences sharedPreferences;
+  String bookmarked;
+
+  getBookmarked() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    String book = sharedPreferences.getString("Bookmarks");
+    setState(() {
+      bookmarked = book;
+    });
+    print(bookmarked);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBookmarked();
+  }
+
   @override
   Widget build(BuildContext context) {
     int offset = 1;
     return Scaffold(
-      backgroundColor: Colors.green[100],
       appBar: AppBar(
         title: Text(widget.name, style: TextStyle(color: Colors.black)),
         elevation: 0,
@@ -37,12 +55,29 @@ class _CategoryListState extends State<CategoryList> {
               widget.image,
             ),
           ),
+          Center(
+            child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Text('Add to Favorite'),
+                color: Color(0xff01C606),
+                onPressed: () async {
+                  var favObject = FavouriteModel();
+                  favObject.id = widget.id;
+                  favObject.category = widget.name;
+                  favObject.image = widget.image;
+                  var favService = FavouriteService();
+                  var result = await favService.saveFavs(favObject);
+                  print(result);
+                }),
+          ),
           Container(
-            height: MediaQuery.of(context).size.height * .68,
+            height: MediaQuery.of(context).size.height * .63,
             child: FutureBuilder(
               future: fetchPosts(100, widget.id, offset),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  print('asd: ${snapshot.data}');
                   return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
@@ -50,7 +85,6 @@ class _CategoryListState extends State<CategoryList> {
                         String excerpt = wpPosts['post_content'];
                         String chapter = wpPosts['title'];
                         String category = wpPosts['category'];
-                        List image = wpPosts['images'];
                         int id = wpPosts['category_id'];
                         String imageurl = wpPosts['category_image'];
                         return Column(
@@ -62,12 +96,13 @@ class _CategoryListState extends State<CategoryList> {
                                       ? Navigator.of(context)
                                           .push(MaterialPageRoute(
                                               builder: (context) => Cartoons(
-                                                    images: image,
                                                     post: excerpt,
                                                     chapter: chapter,
                                                     category: category,
-                                                    imageUrl: imageurl,
                                                     id: id,
+                                                    imageUrl: imageurl,
+                                                    sample: snapshot.data,
+                                                    index: index,
                                                   )))
                                       : Navigator.of(context)
                                           .push(MaterialPageRoute(
@@ -77,6 +112,8 @@ class _CategoryListState extends State<CategoryList> {
                                             category: category,
                                             id: id,
                                             imageUrl: imageurl,
+                                            sample: snapshot.data,
+                                            index: index,
                                           ),
                                         ));
                                 },
@@ -88,7 +125,9 @@ class _CategoryListState extends State<CategoryList> {
                                         vertical: 5,
                                         horizontal: 5,
                                       ),
-                                      color: Color(0xff333333),
+                                      color: Color(bookmarked == chapter
+                                          ? 0xff01C606
+                                          : 0xff333333),
                                       child: Text(
                                         chapter,
                                         style: TextStyle(color: Colors.white),

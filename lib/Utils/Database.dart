@@ -14,5 +14,7 @@ class DatabaseConnection {
   createDatabase(Database database, int version) async {
     await database.execute(
         'CREATE TABLE IF NOT EXISTS journal_entries(id INTEGER PRIMARY KEY, chapter TEXT, name TEXT, category TEXT, post TEXT)');
+    await database.execute(
+        'CREATE TABLE IF NOT EXISTS favourites(id INTEGER PRIMARY KEY, chapter TEXT, name TEXT, category TEXT, post TEXT, image Text)');
   }
 }
