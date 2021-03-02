@@ -69,7 +69,7 @@ class _AuthDialogState extends State<AuthDialog> {
             child: Column(children: [
               Container(
                 height: 40,
-                width: 120,
+                width: 140,
                 decoration: BoxDecoration(
                     color: Color(0xff01C606),
                     borderRadius: BorderRadius.circular(10),
@@ -79,36 +79,39 @@ class _AuthDialogState extends State<AuthDialog> {
                 ),
               ),
               widget.category != 'Isekai no Monogatari'
-                  ? GestureDetector(
-                      onTap: () async {
-                        var journalObject = Journal();
+                  ? Container(
+                      height: 40,
+                      width: 140,
+                      decoration: BoxDecoration(
+                          color: Color(0xff01C606),
+                          borderRadius: BorderRadius.circular(10),
+                          border:
+                              Border.all(color: Colors.grey[700], width: 1.5)),
+                      child: RaisedButton(
+                        onPressed: () async {
+                          var journalObject = Journal();
 
-                        journalObject.id = widget.id;
-                        journalObject.name = widget.name;
-                        journalObject.category = widget.category;
-                        journalObject.post = widget.read;
-                        journalObject.chapter = widget.chapter;
+                          journalObject.id = widget.id;
+                          journalObject.name = widget.name;
+                          journalObject.category = widget.category;
+                          journalObject.post = widget.read;
+                          journalObject.chapter = widget.chapter;
 
-                        var journalService = JournalService();
-                        var result =
-                            await journalService.saveJournal(journalObject);
+                          var journalService = JournalService();
+                          var result =
+                              await journalService.saveJournal(journalObject);
 
-                        print(result);
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 120,
-                        decoration: BoxDecoration(
-                            color: Color(0xff01C606),
+                          print(result);
+                        },
+                        color: Color(0xff01C606),
+                        shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
+                            side: BorderSide(
                                 color: Colors.grey[700], width: 1.5)),
-                        child: Center(
-                          child: Text(
-                            'Download',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
+                        child: Text(
+                          'Download',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
                     )
@@ -116,66 +119,78 @@ class _AuthDialogState extends State<AuthDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      isPlaying ? notReading() : speak();
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          color: Color(0xff01C606),
+                  Container(
+                    height: 40,
+                    width: 70,
+                    child: RaisedButton(
+                      color: Color(0xff01C606),
+                      shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          border:
-                              Border.all(color: Colors.grey[700], width: 1.5)),
-                      child: Center(
-                        child: isPlaying ? Text('Pause') : Text('Read'),
-                      ),
+                          side:
+                              BorderSide(color: Colors.grey[700], width: 1.5)),
+                      onPressed: () {
+                        isPlaying ? notReading() : speak();
+                      },
+                      child: isPlaying
+                          ? Center(
+                              child: Text(
+                                'Pause',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                'Read',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      stop();
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          color: Color(0xff01C606),
-                          borderRadius: BorderRadius.circular(10),
-                          border:
-                              Border.all(color: Colors.grey[700], width: 1.5)),
-                      child: Center(child: Text('Stop')),
-                    ),
+                  Container(
+                    height: 40,
+                    width: 70,
+                    child: RaisedButton(
+                        color: Color(0xff01C606),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(
+                                color: Colors.grey[700], width: 1.5)),
+                        onPressed: () {
+                          stop();
+                        },
+                        child: Center(
+                          child: Text(
+                            'Stop',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        )),
                   ),
                 ],
               ),
-              GestureDetector(
-                onTap: () async {
-                  SharedPreferences _shared =
-                      await SharedPreferences.getInstance();
-                  _shared.setString('Bookmarks', widget.chapter);
-                  print(_shared);
-                },
-                child: Container(
-                  height: 40,
-                  width: 120,
-                  decoration: BoxDecoration(
-                      color: Color(0xff01C606),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey[700], width: 1.5)),
-                  child: Center(
-                      child: Text(
-                    'Bookmark',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  )),
-                ),
-              )
+              Container(
+                height: 40,
+                width: 140,
+                child: RaisedButton(
+                    color: Color(0xff01C606),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.grey[700], width: 1.5)),
+                    onPressed: () async {
+                      SharedPreferences _shared =
+                          await SharedPreferences.getInstance();
+                      _shared.setString('Bookmarks', widget.chapter);
+                      print(_shared);
+                    },
+                    child: Text(
+                      'Bookmark',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    )),
+              ),
             ]))
         : Container(
             height: MediaQuery.of(context).size.height * .176,
             width: MediaQuery.of(context).size.width * .1,
-            //constraints: BoxConstraints.tight(width: 120),
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -195,62 +210,58 @@ class _AuthDialogState extends State<AuthDialog> {
                   ),
                 ),
                 widget.category != 'Isekai no Monogatari'
-                    ? GestureDetector(
-                        onTap: () async {
-                          var journalObject = Journal();
-
-                          journalObject.id = widget.id;
-                          journalObject.name = widget.name;
-                          journalObject.category = widget.category;
-                          journalObject.post = widget.read;
-                          journalObject.chapter = widget.chapter;
-
-                          var journalService = JournalService();
-                          var result =
-                              await journalService.saveJournal(journalObject);
-
-                          print(result);
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 120,
-                          decoration: BoxDecoration(
-                              color: Color(0xff01C606),
+                    ? Container(
+                        height: 40,
+                        width: 120,
+                        child: RaisedButton(
+                          color: Color(0xff01C606),
+                          shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
+                              side: BorderSide(
                                   color: Colors.grey[700], width: 1.5)),
-                          child: Center(
-                            child: Text(
-                              'Download',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
+                          onPressed: () async {
+                            var journalObject = Journal();
+
+                            journalObject.id = widget.id;
+                            journalObject.name = widget.name;
+                            journalObject.category = widget.category;
+                            journalObject.post = widget.read;
+                            journalObject.chapter = widget.chapter;
+
+                            var journalService = JournalService();
+                            var result =
+                                await journalService.saveJournal(journalObject);
+
+                            print(result);
+                          },
+                          child: Text(
+                            'Download',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ),
                       )
                     : Container(),
-                GestureDetector(
-                  onTap: () async {
-                    SharedPreferences _shared =
-                        await SharedPreferences.getInstance();
-                    _shared.setString('Bookmarks', widget.chapter);
-                    print(_shared);
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 120,
-                    decoration: BoxDecoration(
-                        color: Color(0xff01C606),
-                        borderRadius: BorderRadius.circular(10),
-                        border:
-                            Border.all(color: Colors.grey[700], width: 1.5)),
-                    child: Center(
-                        child: Text(
-                      'Bookmark',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    )),
-                  ),
+                Container(
+                  height: 40,
+                  width: 120,
+                  child: RaisedButton(
+                      color: Color(0xff01C606),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side:
+                              BorderSide(color: Colors.grey[700], width: 1.5)),
+                      onPressed: () async {
+                        SharedPreferences _shared =
+                            await SharedPreferences.getInstance();
+                        _shared.setString('Bookmarks', widget.chapter);
+                        print(_shared);
+                      },
+                      child: Text(
+                        'Bookmark',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      )),
                 ),
               ],
             ));

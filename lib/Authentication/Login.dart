@@ -16,6 +16,8 @@ class _LoginState extends State<Login> {
   final key = new GlobalKey<ScaffoldState>();
   String password = '';
   bool passwordVisible = false;
+  int day = DateTime.now().day.toInt();
+  int month = DateTime.now().month.toInt();
 
   _login(String password) async {
     if (_formkey.currentState.validate()) {
@@ -40,6 +42,8 @@ class _LoginState extends State<Login> {
         var jsonData = json.decode(response.body);
         setState(() {
           _shared.setString('token', jsonData['token']);
+          _shared.setInt('day', day);
+          _shared.setInt('month', month);
         });
         print(jsonData);
         //Navigator.pushNamedAndRemoveUntil(context, 'Home', (_) => false);
@@ -137,16 +141,6 @@ class _LoginState extends State<Login> {
                               },
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            child: FlatButton(
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(color: Colors.green[400]),
-                              ),
-                              onPressed: () {},
-                            ),
-                          )
                         ],
                       ),
                     ),
@@ -173,82 +167,6 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                /*SizedBox(
-                  height: MediaQuery.of(context).size.height * .05,
-                ),
-                Text(
-                  'or login with',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .02,
-                ),
-Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: ClipOval(
-                        child: Container(
-                          color: Colors.white,
-                          height: 50.0,
-                          width: 50.0,
-                          child: Center(
-                              child: Text(
-                            'I',
-                            style: TextStyle(
-                                color: Color(0xff707070), fontSize: 24),
-                            textAlign: TextAlign.center,
-                          )),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * .04,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: ClipOval(
-                        child: Container(
-                          color: Colors.white,
-                          height: 50.0,
-                          width: 50.0,
-                          child: Center(
-                              child: Text(
-                            'F',
-                            style: TextStyle(
-                                color: Color(0xff707070), fontSize: 24),
-                            textAlign: TextAlign.center,
-                          )),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .1,
-                ),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'New User?',
-                      style: TextStyle(color: Colors.white60),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * .01,
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(color: Colors.lightGreenAccent[400]),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).pushNamed('Register');
-                      },
-                    )
-                  ],
-                ), */
               ],
             ),
           ),

@@ -1,5 +1,4 @@
 import 'dart:async';
-//import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wawchan/Authentication/Login.dart';
@@ -12,7 +11,6 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   SharedPreferences sharedPreferences;
-  //final Connectivity _connectivity = Connectivity();
   @override
   void initState() {
     super.initState();
@@ -30,15 +28,18 @@ class _SplashState extends State<Splash> {
             ),
             (Route<dynamic> route) => false);
       } else {
-        /* var result = await _connectivity.checkConnectivity();
-        result == ConnectivityResult.none
-            ? Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (BuildContext context) => Library()),
-                (Route<dynamic> route) => false)
-            : */
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Home()),
-            (Route<dynamic> route) => false);
+        if ((sharedPreferences.getInt('day') + 7) <= DateTime.now().day ||
+            sharedPreferences.getInt('month') != DateTime.now().month) {
+          sharedPreferences.clear();
+          print('cleared');
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (BuildContext context) => Login()),
+              (Route<dynamic> route) => false);
+        } else {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (BuildContext context) => Home()),
+              (Route<dynamic> route) => false);
+        }
       }
     });
   }
