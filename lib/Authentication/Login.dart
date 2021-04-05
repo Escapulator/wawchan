@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
       //var jsonData = null;
       SharedPreferences _shared = await SharedPreferences.getInstance();
       final response = await http.post(
-          'http://whatsawhizzerwebnovels.com//wp-json/jwt-auth/v1/token',
+          'https://whatsawhizzerwebnovels.com//wp-json/jwt-auth/v1/token',
           headers: {'Accept': 'application/json'},
           body: dets);
       if (response.statusCode == 200) {
