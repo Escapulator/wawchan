@@ -21,6 +21,13 @@ class Repo {
     return await connection.insert(table, data);
   }
 
+  //670793253
+  //
+  //670793253
+  //
+  //
+  //670793253
+
   readData(table) async {
     var connection = await database;
     return await connection.query(table);

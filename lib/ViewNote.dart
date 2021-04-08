@@ -99,7 +99,7 @@ class _ViewNoteState extends State<ViewNote> {
         )
       ],
       body: Container(
-        height: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.83,
         child: Column(
           children: [
             Text(
@@ -110,7 +110,7 @@ class _ViewNoteState extends State<ViewNote> {
               height: 8,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .86,
+              height: MediaQuery.of(context).size.height * .72,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

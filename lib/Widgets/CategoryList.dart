@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wawchan/Model/FavModel.dart';
 import 'package:wawchan/Screens/Anoda.dart';
@@ -69,10 +70,11 @@ class _CategoryListState extends State<CategoryList> {
                   var favService = FavouriteService();
                   var result = await favService.saveFavs(favObject);
                   print(result);
+                  showCorrectInfoFlushbar(context);
                 }),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * .63,
+            height: MediaQuery.of(context).size.height / 1.68,
             child: FutureBuilder(
               future: fetchPosts(100, widget.id, offset),
               builder: (context, snapshot) {
@@ -150,5 +152,18 @@ class _CategoryListState extends State<CategoryList> {
         ],
       ),
     );
+  }
+
+  void showCorrectInfoFlushbar(BuildContext context) {
+    Fluttertoast.showToast(
+        msg: "Download Successful",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Theme.of(context).accentColor,
+        textColor: Colors.white,
+        fontSize: 20.0);
+
+    setState(() {});
   }
 }
